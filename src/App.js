@@ -3,7 +3,7 @@ import "./App.css";
 import Box from "./component/Box";
 
 import Rock from "./images/Rock.png";
-import Sicssors from "./images/Sicssors.png";
+import Scissors from "./images/Sicssors.png";
 import Paper from "./images/Paper.png";
 import Question from "./component/Question";
 
@@ -29,7 +29,7 @@ const choice = {
   },
   Scissors: {
     name: "Scissors",
-    img: `${Sicssors}`,
+    img: `${Scissors}`,
   },
   Paper: {
     name: "Paper",
@@ -48,20 +48,20 @@ function App() {
   const [loseCount, setLoseCount] = useState(0);
   const [comResult, setComResult] = useState(" ");
 
-  const playStart = () => {};
-
-  const play = (userChoice) => {
+  const playStart = () => {
     let computerChoice = randomChoiceItem(); // 내가입력한 값과 컴퓨터가 선택한 값으로 승패를 결정 짓는다.
     setComputerSelect(computerChoice);
     let questionsChoice = randomChoiceQuestion();
     setQuestionSelect(questionsChoice);
+  };
+
+  const play = (userChoice) => {
     setUserSelect(choice[userChoice]);
     let userResult = judgement(
       choice[userChoice],
-      computerChoice,
-      questionsChoice
+      ComputerSelect,
+      questionSelect
     );
-    console.log(userResult);
     setResult(userResult);
     setComResult(comJudgement(userResult));
     if (gameCount > 0) {
@@ -134,6 +134,14 @@ function App() {
     let finalQuestion = questionsArray[randomQuestion];
     return questions[finalQuestion];
   };
+
+  const reflesh = () => {
+    let computerChoice = randomChoiceItem(); // 내가입력한 값과 컴퓨터가 선택한 값으로 승패를 결정 짓는다.
+    setComputerSelect(computerChoice);
+    let questionsChoice = randomChoiceQuestion();
+    setQuestionSelect(questionsChoice);
+    setUserSelect("null");
+  };
   return (
     <div>
       {gameFlag ? (
@@ -148,6 +156,7 @@ function App() {
             <p>게임횟수 : {gameCount}</p>
             <p>이긴횟수 : {winCount}</p>
             <p>진횟수 : {loseCount}</p>
+            <button onClick={reflesh}>초기화</button>
           </div>
         </div>
       ) : (
