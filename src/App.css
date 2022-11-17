@@ -1,0 +1,35 @@
+.box {
+    width: 500px;
+    border: 1px solid black;
+  }
+  
+  .item-img {
+    width: 400px;
+    height: 400px;
+  }
+  
+  .main {
+    /* height: 500px; 화면 비율 (view height 보이는 높이) */
+    display: flex;
+    justify-content: center;  /*좌우 센터*/
+    align-items: center;      /* 상하 센터 */
+    
+  }
+  
+  .win {  border: 10px solid green;  color: green; }
+  .lose {  border: 10px solid red;  color: red; }
+
+
+.startmain{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.startmain button{
+  cursor: pointer;
+  width: 800px;
+  height: 600px;
+  border-radius: 20px;
+}
+

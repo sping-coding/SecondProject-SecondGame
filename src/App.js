@@ -6,6 +6,7 @@ import Rock from "./images/Rock.png";
 import Scissors from "./images/Sicssors.png";
 import Paper from "./images/Paper.png";
 import Question from "./component/Question";
+import Timer from "./component/Timer";
 
 const questions = {
   Win: {
@@ -77,6 +78,7 @@ function App() {
       // UserResult 값이 lose이면 loseCount +1
       setLoseCount(loseCount + 1);
     }
+    reflesh();
   };
   const comJudgement = (result) => {
     return result === "win" ? "lose" : "win";
@@ -140,19 +142,28 @@ function App() {
     setComputerSelect(computerChoice);
     let questionsChoice = randomChoiceQuestion();
     setQuestionSelect(questionsChoice);
-    setUserSelect("null");
+    // setUserSelect("null");
   };
+  const [seconds, setSeconds] = useState(3700);
+
   return (
     <div>
       {gameFlag ? (
         <div>
-          <Question item={questionSelect} />
-          <Box title="You" item={userSelect} result={result} />
-          <Box title="Computer" item={ComputerSelect} result={result} />
-          <button onClick={() => play("Scissors")}>가위</button>
-          <button onClick={() => play("Rock")}>바위</button>
-          <button onClick={() => play("Paper")}>보</button>
-          <div>
+          <Timer />
+          <div className="main">
+            <Question item={questionSelect} />
+          </div>
+          <div className="main">
+            <Box title="You" item={userSelect} result={result} />
+            <Box title="Computer" item={ComputerSelect} result={result} />
+          </div>
+          <div className="main">
+            <button onClick={() => play("Scissors")}>가위</button>
+            <button onClick={() => play("Rock")}>바위</button>
+            <button onClick={() => play("Paper")}>보</button>
+          </div>
+          <div className="main">
             <p>게임횟수 : {gameCount}</p>
             <p>이긴횟수 : {winCount}</p>
             <p>진횟수 : {loseCount}</p>
@@ -160,7 +171,9 @@ function App() {
           </div>
         </div>
       ) : (
-        <button onClick={startGame}>Start</button>
+        <div className="startmain">
+          <button onClick={startGame}>Start</button>
+        </div>
       )}
     </div>
   );
