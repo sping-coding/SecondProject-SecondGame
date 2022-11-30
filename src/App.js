@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import "./App.css";
 import Box from "./component/Box";
 
@@ -6,20 +6,22 @@ import Rock from "./images/Rock.png";
 import Scissors from "./images/Sicssors.png";
 import Paper from "./images/Paper.png";
 import Question from "./component/Question";
-import Timer from "./component/Timer";
+
+import firstC from "./images/good1.png";
+import secondC from "./images/2-1 1.png";
 
 const questions = {
   Win: {
     num: 1,
-    question: "컴퓨터를 이겨주세요",
+    question: "나를 이겨봐!",
   },
   Lose: {
     num: 2,
-    question: "컴퓨터를 져주세요",
+    question: "나를 져봐!",
   },
   Tie: {
     num: 3,
-    question: "컴퓨터를 비겨주세요",
+    question: "나를 비겨봐!",
   },
 };
 
@@ -48,6 +50,9 @@ function App() {
   const [winCount, setWinCount] = useState(0);
   const [loseCount, setLoseCount] = useState(0);
   const [comResult, setComResult] = useState(" ");
+
+  const [btnDisabled, setBtnDisabled] = useState(false);
+  const interval = useRef(null);
 
   const playStart = () => {
     let computerChoice = randomChoiceItem(); // 내가입력한 값과 컴퓨터가 선택한 값으로 승패를 결정 짓는다.
@@ -79,7 +84,21 @@ function App() {
       setLoseCount(loseCount + 1);
     }
     reflesh();
+    setBtnDisabled(true);
+    clearInterval(interval.current);
+    setTimeout(() => {
+      interval.current = setInterval(setUserSelect, 100);
+      setBtnDisabled(false);
+    }, 100);
   };
+
+  useEffect(() => {
+    interval.current = setInterval(userSelect, 100);
+    return () => {
+      clearInterval(interval.current);
+    };
+  }, [userSelect]);
+
   const comJudgement = (result) => {
     return result === "win" ? "lose" : "win";
   };
@@ -142,23 +161,27 @@ function App() {
     setComputerSelect(computerChoice);
     let questionsChoice = randomChoiceQuestion();
     setQuestionSelect(questionsChoice);
-    // setUserSelect("null");
   };
-  const [seconds, setSeconds] = useState(3700);
 
   return (
     <div>
       {gameFlag ? (
-        <div>
-          <Timer />
-          <div className="main">
+        <div className="containers">
+          <div className="main questions">
             <Question item={questionSelect} />
           </div>
-          <div className="main">
-            <Box title="You" item={userSelect} result={result} />
-            <Box title="Computer" item={ComputerSelect} result={result} />
+          {/* <Timer /> */}
+          <div className="main vs">
+            <Box title="You" item={userSelect} result={result} img={firstC} />
+            <h1>VS</h1>
+            <Box
+              title="Computer"
+              item={ComputerSelect}
+              result={result}
+              img={secondC}
+            />
           </div>
-          <div className="main">
+          <div className="main mainBtn">
             <button onClick={() => play("Scissors")}>가위</button>
             <button onClick={() => play("Rock")}>바위</button>
             <button onClick={() => play("Paper")}>보</button>
@@ -167,7 +190,6 @@ function App() {
             <p>게임횟수 : {gameCount}</p>
             <p>이긴횟수 : {winCount}</p>
             <p>진횟수 : {loseCount}</p>
-            <button onClick={reflesh}>초기화</button>
           </div>
         </div>
       ) : (

@@ -1,11 +1,19 @@
+.containers{
+  border: 5px solid #52D2C4;
+  width: 600px;
+  height: 700px;
+  margin: auto;
+  border-radius: 20px;
+  position: relative;
+}
 .box {
-    width: 500px;
-    border: 1px solid black;
+    width: 200px;
+    /* border: 1px solid black; */
   }
   
   .item-img {
-    width: 400px;
-    height: 400px;
+    width: 100px;
+    height: 100px;
   }
   
   .main {
@@ -15,9 +23,13 @@
     align-items: center;      /* 상하 센터 */
     
   }
+ 
+  .vs{
+    justify-content: space-around;
+  }
   
-  .win {  border: 10px solid green;  color: green; }
-  .lose {  border: 10px solid red;  color: red; }
+  /* .win {  border: 10px solid yellowgreen;  color: yellowgreen; }
+  .lose {  border: 10px solid tomato;  color: tomato; } */
 
 
 .startmain{
@@ -33,3 +45,33 @@
   border-radius: 20px;
 }
 
+.mainBtn{
+  margin-top: 30px;
+}
+
+.mainBtn button{
+  height: 50px;
+  width: 80px;
+  font-size: 30px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.questions{
+  /* border: 3px solid burlywood; */
+  border-radius: 20px;
+  margin: auto;
+  margin-top: 15px;
+  margin-bottom: 20px;
+  width: 80%;
+}
+
+.ch{
+  position: absolute;
+  width: 200px;
+  height: 150px;
+}
+
+.gameHi{
+  width: 100px;
+}
